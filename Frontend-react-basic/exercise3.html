@@ -19,7 +19,7 @@
                this.state = {temperature: '', weather: '', imgurl: ''};
            }
            componentDidMount() {
-               fetch('http://api.openweathermap.org/data/2.5/weather?q=Helsinki&Units&APPID=e5b6e7a3bbaf42358257a5a8bdcd4c3c')
+               fetch('http://api.openweathermap.org/data/2.5/weather?q=Helsinki&units=metric&APPID=e5b6e7a3bbaf42358257a5a8bdcd4c3c')
                .then((response) => response.json())
                .then((responseData) => {
                    this.setState({
@@ -33,7 +33,7 @@
                const Url = "http://openweathermap.org/img/w/" + this.state.imgurl + ".png";
                return(
                    <div>
-                   <div>Temperature: {this.state.temperature}</div>
+                   <div>Temperature: {this.state.temperature} Celsius</div>
                    <div>Weather: {this.state.weather}</div>
                    <div><img src={Url} /></div>
                    </div>

@@ -1,37 +1,36 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: '', 
-      description: '', 
+      date: "",
+      description: "",
       todos: []
-    }
+    };
   }
-  inputChanged = (event) => {
-    this.setState({[event.target.name]: event.target.value});
-  }
-  deleteTodos = (item, index) => {
-    const deletetodos = Object.assign([], this.state.todos);
-    deletetodos.splice(item, 1);
-    this.setState({todos: []});
-  }
-
-  addTodo = (event) => {
+  inputChanged = event => {
+    this.setState({ [event.target.name]: event.target.value });
+  };
+  addTodo = event => {
     event.preventDefault();
-    const listObject = {description: this.state.description, date: this.state.date}
+    const listObject = {
+      description: this.state.description,
+      date: this.state.date
+    };
     this.setState({
       todos: [listObject, ...this.state.todos]
     });
-  
-  }
+  };
   render() {
-    const todolist = this.state.todos.map((item, index) => <tr key={index}>
+    const todolist = this.state.todos.map((item, index) => (
+      <tr key={index}>
         <td>{item.date}</td>
         <td>{item.description}</td>
-      </tr>);
-    return <div className="App">
+      </tr>
+    ));
+    return (
+      <div className="App">
         <div className="App-header">
           <h2>Simple Todolist</h2>
         </div>
@@ -40,15 +39,26 @@ class App extends Component {
             <fieldset>
               <legend>Add todo:</legend>
               Description:
-              <input type="text" id="#"name="description" onChange={this.inputChanged} value={this.state.description} />
+              <input
+                type="text"
+                id="#"
+                name="description"
+                onChange={this.inputChanged}
+                value={this.state.description}
+              />
               Date:
-              <input type="date" name="date" onChange={this.inputChanged} value={this.state.date} />
+              <input
+                type="date"
+                name="date"
+                onChange={this.inputChanged}
+                value={this.state.date}
+              />
               <input type="submit" value="Add" />
             </fieldset>
           </form>
         </div>
         <div>
-          <table className='App'>
+          <table className="App">
             <tbody>
               <tr>
                 <th>Date</th>
@@ -58,7 +68,8 @@ class App extends Component {
             </tbody>
           </table>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 export default App;
