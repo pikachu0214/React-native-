@@ -1,5 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
+import Todolist from './components/Todolist';
+/*import ReactTable from 'react-table';
+import 'react-table/react-table.css';*/
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -13,12 +17,14 @@ class App extends Component {
   inputChanged = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  deleteList = (index, e) => {
-    let newState = Object.assign([], this.state.todos);
-     newState.splice(index, 1);
-      this.setState({
-        todos: newState
-     });
+  deleteList = (event) => {
+   const index = parseInt(event.target.id, 10);
+  /*let newState = Object.assign([], this.state.todos);
+     newState.splice(index, 1);*/
+      
+     this.setState({
+        todos: this.state.todos.filter((todo, i) => i !==index),
+     })
      console.log(this.deleteList);
   };
   addTodo = event => {
@@ -32,15 +38,6 @@ class App extends Component {
     });
   };
   render() {
-    const todolist = this.state.todos.map((todo, index) => (
-      <tr key={index}>
-        <td>{todo.date}</td>
-        <td>{todo.description}</td>
-        <td>
-          <button onClick={this.deleteList.bind(this, index)}>Delete</button>
-        </td>
-      </tr>
-    ));
     return <div className="App">
         <div className="App-header">
           <h2>Simple Todolist</h2>
@@ -50,27 +47,37 @@ class App extends Component {
             <fieldset>
               <legend>Add todo:</legend>
               Description:
-              <input type="text" id="#" name="description" onChange={this.inputChanged} value={this.state.description} />
+              <input type="text" name="description" onChange={this.inputChanged} value={this.state.description} />
               Date:
               <input type="date" name="date" onChange={this.inputChanged} value={this.state.date} />
               <input type="submit" value="Add" />
             </fieldset>
           </form>
         </div>
-        <div>
-          <table>
-            <tbody>
-              <tr>
-                <th>Date</th>
-                <th>Description</th>
-              </tr>
-              {todolist}
-            </tbody>
-          </table>
+        <div className="App">
+         <Todolist data={this.state.todos} deleteList={this.deleteList}/>
+
         </div>
       </div>;
   }
 }
-console.log("Todo app is running");
+  /*This goes inside div className="App"
+        <ReactTable 
+          data={this.state.todos}
+          defaultPageSize={10}
+          filterable={true}
 
+          columns={[
+            {
+              Header: "Description",
+              accessor: "description"
+            },
+            {
+              Header: "Date",
+              accessor: "date"
+            }
+          ]}
+          />
+    */
+console.log("Todo app is running");
 export default App;
