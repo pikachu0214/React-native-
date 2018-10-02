@@ -23,15 +23,13 @@ export default class App extends React.Component {
   }
   */
   incrementPress = () => {
+    const result = parseFloat(this.state.num1) + parseFloat(this.state.num2);
+    const history = this.state.num1 + " + " + this.state.num2 + " = " + result;
     this.setState({
-      data: [...this.state.data, { key: this.state.text }],
-      text:
-        this.state.num1 +
-        " + " +
-        this.state.num2 +
-        " = " +
-        this.state.result,
-        result: parseFloat(this.state.num1) + parseFloat(this.state.num2)
+      data: [...this.state.data, { key: history }],
+      num1: "",
+      num2: "",
+      result: result
     });
   };
   /*
@@ -42,16 +40,14 @@ export default class App extends React.Component {
     }
   */
   decrementPress = () => {
-    this.setState({
-      data: [...this.state.data, { key: this.state.text }],
-      text:
-        this.state.num1 +
-        " - " +
-        this.state.num2 +
-        " = " +
-        this.state.result,
-      result: parseFloat(this.state.num1) - parseFloat(this.state.num2)
-    });
+      const result = parseFloat(this.state.num1) - parseFloat(this.state.num2);
+      const history = this.state.num1 + " - " + this.state.num2 + " = " + result;  
+      this.setState({
+        data: [...this.state.data, { key: history }],
+        num1: "",
+        num2: "",
+        result: result
+      });
   };
   render() {
     return (
