@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import Todolist from './components/Todolist';
+import Todolist from "./components/Todolist";
 /*import ReactTable from 'react-table';
 import 'react-table/react-table.css';*/
 
@@ -13,19 +13,19 @@ class App extends Component {
       todos: []
     };
   }
-
   inputChanged = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
-  deleteList = (event) => {
-   const index = parseInt(event.target.id, 10);
-  /*let newState = Object.assign([], this.state.todos);
-     newState.splice(index, 1);*/
-      
-     this.setState({
-        todos: this.state.todos.filter((todo, i) => i !==index),
-     })
-     console.log(this.deleteList);
+  deleteList = event => {
+    const index = parseInt(event.target.id, 10);
+    /*let newState = Object.assign([], this.state.todos);
+     newState.splice(index, 1);
+     let todo = this.state.todos.filter((todo, i) => i !==event);
+     */
+    this.setState({
+      todos: this.state.todos.filter((todo, i) => i !== index)
+    });
+    console.log(this.deleteList);
   };
   addTodo = event => {
     event.preventDefault();
@@ -38,7 +38,8 @@ class App extends Component {
     });
   };
   render() {
-    return <div className="App">
+    return (
+      <div className="App">
         <div className="App-header">
           <h2>Simple Todolist</h2>
         </div>
@@ -47,21 +48,31 @@ class App extends Component {
             <fieldset>
               <legend>Add todo:</legend>
               Description:
-              <input type="text" name="description" onChange={this.inputChanged} value={this.state.description} />
+              <input
+                type="text"
+                name="description"
+                onChange={this.inputChanged}
+                value={this.state.description}
+              />
               Date:
-              <input type="date" name="date" onChange={this.inputChanged} value={this.state.date} />
+              <input
+                type="date"
+                name="date"
+                onChange={this.inputChanged}
+                value={this.state.date}
+              />
               <input type="submit" value="Add" />
             </fieldset>
           </form>
         </div>
         <div className="App">
-         <Todolist data={this.state.todos} deleteList={this.deleteList}/>
-
+          <Todolist data={this.state.todos} deleteList={this.deleteList} />
         </div>
-      </div>;
+      </div>
+    );
   }
 }
-  /*This goes inside div className="App"
+/*This goes inside div className="App"
         <ReactTable 
           data={this.state.todos}
           defaultPageSize={10}
