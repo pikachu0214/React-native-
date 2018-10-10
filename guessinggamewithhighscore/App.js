@@ -1,5 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, TextInput, Alert, AsyncStorage } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  Alert,
+  AsyncStorage
+} from "react-native";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -17,37 +25,45 @@ export default class App extends React.Component {
       randomNumber: rand
     });
   }
-  /*try {
-    await AsyncStorage.setItem('', )
-  } catch(error){
-    Alert.alert('Error saving data');
-  }
-  */
-  buttonPress = () => {
-    let randomNumber = this.state.randomNumber;
-    let Guess = JSON.stringify(this.state.guess);
-    let userGuess = JSON.parse(Guess);
-    if (userGuess > randomNumber) {
-      this.setState(prevState => {
-        return {
-          text: "Your guess is too high ",
-          count: prevState.count + 1
-        };
-      });
-    } else if (userGuess < randomNumber) {
-      this.setState(prevState => {
-        return {
-          text: "Your guess is too low ",
-          count: prevState.count + 1
-        };
-      });
-    } else if (userGuess == randomNumber) {
-      this.setState(prevState => {
-        return { text: "you got it ", count: prevState.count + 1 };
-      });
-      Alert.alert("count: " + this.state.count);
+  buttonPress = async () => {
+    /* saved number of counts */
+    try {
+      await AsyncStorage.setItem("count", JSON.stringify(this.state.count));
+    } catch (error) {
+      Alert.alert("error saving data");
     }
-    return this.state.text;
+
+    /* run the count program */
+    try {
+      let count = await AsyncStorage.getItem("count");
+      /* count is the key from AsyncStorage.setItem('count', this.state.count ) */
+      let parsed = JSON.parse(count);
+      /* this is the key to the object, not the object */
+      let randomNumber = this.state.randomNumber;
+      let userGuess = parseInt(this.state.guess);
+      if (userGuess > randomNumber) {
+        this.setState(prevState => {
+          return {
+            text: "Your guess is too high ",
+            count: prevState.count + 1
+          };
+        });
+      } else if (userGuess < randomNumber) {
+        this.setState(prevState => {
+          return { text: "Your guess is too low ", count: prevState.count + 1 };
+        });
+      } else if (userGuess == randomNumber) {
+        this.setState(prevState => {
+          return { text: "HighScore", count: prevState.count + 1 };
+        });
+        Alert.alert("HighScore: " + parsed);
+        /* alert the resulting high score */
+      }
+      return this.state.text;
+    } catch (error) {
+      Alert.alert(error);
+    }
+    
   };
   render() {
     const result = this.state.text;
