@@ -30,9 +30,9 @@ export default class App extends React.Component {
   }
   convert = () => {
     if (this.state.currency != undefined) {
-      let rateValue = this.state.rates[this.state.currency];
-      let userValue = this.state.value;
-      let result = userValue / rateValue;
+      let rate = this.state.rates[this.state.currency];
+      let user = this.state.value;
+      let result = user / rate;
 
       this.setState({ result: result.toFixed(2) });
     }
